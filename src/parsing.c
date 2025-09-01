@@ -6,16 +6,11 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:50:49 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/01 15:20:20 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/09/01 16:46:11 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
-
-int	parsing(int ac, char **av)
-{
-	
-}#include "../inc/cub3d.h"
 
 int	check_file_format(char *filename)
 {
