@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/01 18:28:30 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/01 18:35:47 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,20 @@
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
 
+# define	ERR_UTIL			"Map is missing. Muste be : ./cub3d /path/to/map.cub"
+# define	ERR_FORMAT			"Invalid file format. Must be a .cub file."
+# define	ERR_OPEN			"Opening file failed."
+# define	ERR_TEX_MIS			"Textures are missing."
+# define	ERR_TEX_SYN			"Textures are incorrectly writted.\n\
+Must be : (NO, SO, WE or EA) path/to/texture.xpm"
+# define	ERR_COL_MIS			"Colors are missing."
+# define 	ERR_COL_SYN			"Colors are incorrectly writted.\n\
+Must be : (C or F) 0-255, 0-255, 0-255."
+# define	ERR_COL_VAL			"Invalid RGB value. Must be between 0 and 255."
+# define	ERR_MAP_TOO_SMALL	"Map is not at least 3 lines high."
+# define	ERR_MAP_NO_WALLS	"Map is not surrounded by walls."
+# define	ERR_MAP_LAST		"Map is not the last element in file."
+# define	ERR_MAP_INV			"Map description is either wrong or incomplete."
 # define	ERR_UTIL			"The map is missing. Must be : ./cub3d /path/to/map.cub"
 # define	ERR_FORMAT			"Invalid file format. Must be a .cub file."
 # define	ERR_MISSING_PLAYER	"Player is missing on the map."
