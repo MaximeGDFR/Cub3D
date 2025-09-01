@@ -6,11 +6,19 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 17:14:32 by tlair             #+#    #+#             */
-/*   Updated: 2025/09/01 17:14:59 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/01 18:19:57 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/cub3d.h"
+
+int	error(char *msg)
+{
+	ft_putstr_fd("./cub3d Error: ", 2);
+	ft_putstr_fd(msg, 2);
+	ft_putstr_fd("\n", 2);
+	return (1);
+}
 
 char	**ft_arrdup(char **arr)
 {

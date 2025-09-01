@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/01 17:20:48 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/01 18:28:30 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@
 # define	ERR_FORMAT			"Invalid file format. Must be a .cub file."
 # define	ERR_MISSING_PLAYER	"Player is missing on the map."
 # define	ERR_MALLOC			"Malloc failed."
+# define	ERR_INVALID_MAP		"Invalid map."
+# define	ERR_OUT_OF_BOUNDS	"Checked position out of the map."
+# define	ERR_MISSING_LINE	"Missing line"
+# define	ERR_OUT_OF_LINE		"Position out of the line."
+# define	ERR_SPACE_MISPLACED	"Mispaced space."
+# define	ERR_INVALID_CHAR	"Invalid char on the map."
+# define	ERR_FLOOD_FAIL		"Flood fill error."
+# define	ERR_MAP_NOT_CLOSED	"Map not closed."
 
 /* Structures */
 typedef struct s_pos
@@ -109,10 +117,10 @@ typedef struct s_game
 
 /* Functions */
 int		check_file_format(char *filename);
-void	error(char *msg);
 int		parsing(int ac, char **av);
 
 // utils.c
+int		error(char *msg);
 char	**ft_arrdup(char **arr);
 
 #endif

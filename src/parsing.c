@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:50:49 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/01 16:46:11 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/09/01 18:20:31 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@ int	check_file_format(char *filename)
 		|| filename[i - 3] != 'c' || filename[i - 4] != '.')
 		error(ERR_FORMAT);
 	return (0);
-}
-
-void	error(char *msg)
-{
-	ft_putstr_fd("./cub3d Error: ", 2);
-	ft_putstr_fd(msg, 2);
-	ft_putstr_fd("\n", 2);
 }
 
 int	parsing(int ac, char **av)

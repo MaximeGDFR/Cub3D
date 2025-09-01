@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 16:39:40 by tlair             #+#    #+#             */
-/*   Updated: 2025/09/01 17:20:58 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/01 18:23:35 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,35 +54,66 @@ static t_pos	find_player_position(char **map)
 	return (pos);
 }
 
+static int	is_traversable(char c)
+{
+	return (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
 int	flood_fill(char **map, t_pos pos)
 {
-	if (pos.x < 0 || pos.y < 0 || !map[(int)pos.y] || !map[(int)pos.y][(int)pos.x]
-		|| map[(int)pos.y][(int)pos.x] == '1')
+	int		x;
+	int		y;
+	size_t	len;
+
+	if (!map)
+		return (error(ERR_INVALID_MAP));
+	x = (int)pos.x;
+	y = (int)pos.y;
+	if (y < 0 || x < 0)
+		return (error(ERR_OUT_OF_BOUNDS));
+	if (!map[y])
+		return (error(ERR_MISSING_LINE));
+	len = ft_strlen(map[y]);
+	if ((size_t)x >= len)
+		return (error(ERR_OUT_OF_LINE));
+	if (map[y][x] == '1')
 		return (0);
-	map[(int)pos.y][(int)pos.x] = '1';
-	pos.x++;
-	flood_fill(map, pos);
-	pos.x -= 2;
-	flood_fill(map, pos);
-	pos.x++;
-	pos.y++;
-	flood_fill(map, pos);
-	pos.y -= 2;
-	flood_fill(map, pos);
-	return (1);
+	if (map[y][x] == ' ')
+		return (ERR_SPACE_MISPLACED);
+	if (map[y][x] == 'F')
+		return (0);
+	if (!is_traversable(map[y][x]))
+		return (ERR_INVALID_CHAR);
+	map[y][x] = 'F';
+	pos.x = x + 1; pos.y = y;
+	if (flood_fill(map, pos))
+		return (error(ERR_FLOOD_FAIL));
+	pos.x = x - 1; pos.y = y;
+	if (flood_fill(map, pos))
+		return (error(ERR_FLOOD_FAIL));
+	pos.x = x; pos.y = y + 1;
+	if (flood_fill(map, pos))
+		return (error(ERR_FLOOD_FAIL));
+	pos.x = x; pos.y = y - 1;
+	if (flood_fill(map, pos))
+		return (error(ERR_FLOOD_FAIL));
+	return (0);
 }
 
 int	is_playable(char **map, t_player player)
 {
 	char	**map_copy;
+	int		res;
 
 	player.pos = find_player_position(map);
 	if (player.pos.x == -1 || player.pos.y == -1)
-		return (error(ERR_MISSING_PLAYER));
+		return (error(ERR_MISSING_PLAYER), 1);
 	map_copy = ft_arrdup(map);
 	if (!map_copy)
-		return (error(ERR_MALLOC));
-	flood_fill(map_copy, player.pos);
+		return (error(ERR_MALLOC), 1);
+	res = flood_fill(map_copy, player.pos);
 	ft_free_split(map_copy);
+	if (res)
+		return (error(ERR_MAP_NOT_CLOSED));
 	return (0);
 }
