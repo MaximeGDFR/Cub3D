@@ -6,7 +6,11 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/09/01 17:47:03 by mgodefro         ###   ########.fr       */
+=======
+/*   Updated: 2025/09/01 17:20:48 by tlair            ###   ########.fr       */
+>>>>>>> 79a9703577694d0081b9c93a5aea3048636133da
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +125,8 @@ typedef struct s_game
 int		check_file_format(char *filename);
 void	error(char *msg);
 int		parsing(int ac, char **av);
+
+// utils.c
+char	**ft_arrdup(char **arr);
 
 #endif

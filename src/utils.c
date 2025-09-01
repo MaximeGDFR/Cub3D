@@ -1,0 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/09/01 17:14:32 by tlair             #+#    #+#             */
+/*   Updated: 2025/09/01 17:14:59 by tlair            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../inc/cub3d.h"
+
+char	**ft_arrdup(char **arr)
+{
+	char	**new;
+	int		i;
+
+	i = 0;
+	while (arr[i])
+		i++;
+	new = malloc(sizeof(char *) * (i + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (arr[i])
+	{
+		new[i] = ft_strdup(arr[i]);
+		if (!new[i])
+		{
+			while (i-- > 0)
+				free(new[i]);
+			free(new);
+			return (NULL);
+		}
+		i++;
+	}
+	new[i] = NULL;
+	return (new);
+}
