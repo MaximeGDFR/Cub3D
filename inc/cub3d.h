@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/01 17:09:27 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/01 17:20:48 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
 
-# define	ERR_UTIL "The map is missing. Muste be : ./cub3d /path/to/map.cub"
-# define	ERR_FORMAT "Invalid file format. Must be a .cub file."
+# define	ERR_UTIL			"The map is missing. Must be : ./cub3d /path/to/map.cub"
+# define	ERR_FORMAT			"Invalid file format. Must be a .cub file."
+# define	ERR_MISSING_PLAYER	"Player is missing on the map."
+# define	ERR_MALLOC			"Malloc failed."
 
 /* Structures */
 typedef struct s_pos
@@ -109,5 +111,8 @@ typedef struct s_game
 int		check_file_format(char *filename);
 void	error(char *msg);
 int		parsing(int ac, char **av);
+
+// utils.c
+char	**ft_arrdup(char **arr);
 
 #endif
