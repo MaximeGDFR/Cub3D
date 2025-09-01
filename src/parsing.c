@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:50:49 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/01 16:46:11 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/09/01 17:22:48 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ int	check_file_format(char *filename)
 	return (0);
 }
 
-void	error(char *msg)
+int	error(char *msg)
 {
 	ft_putstr_fd("./cub3d Error: ", 2);
 	ft_putstr_fd(msg, 2);
 	ft_putstr_fd("\n", 2);
+	return (1);
 }
 
 int	parsing(int ac, char **av)
