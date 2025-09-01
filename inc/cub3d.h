@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/01 16:47:53 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/09/01 17:09:27 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ typedef struct s_pos
 {
 	double	x;
 	double	y;
-}	t_pos;				// Coordinates
+	double	yaw;        // Player orientation (o to 360)
+}	t_pos;				// Coordinates and orientation
 
 typedef struct s_img
 {
@@ -51,7 +52,6 @@ typedef struct s_img
 typedef struct s_player
 {
 	t_pos	pos;          // Player position
-	t_pos	dir;          // Player direction vector
 	double	move_speed;   // Movement speed
 	double	rot_speed;    // Rotation speed
 }	t_player;
