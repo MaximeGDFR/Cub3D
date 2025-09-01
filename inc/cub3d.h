@@ -6,12 +6,14 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/01 16:22:18 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/01 16:30:31 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
+/* Librairies */
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -22,7 +24,10 @@
 # include <X11/keysym.h>
 
 # include "../minilibx-linux/mlx.h"
+# include "../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
+
+/* Structures */
 
 typedef struct s_pos
 {
@@ -100,3 +105,6 @@ typedef struct s_game
 
 
 #endif
+
+/* Functions */
+
