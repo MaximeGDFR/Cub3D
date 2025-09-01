@@ -27,8 +27,10 @@
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line.h"
 
-/* Structures */
+# define	ERR_UTIL "The map is missing. Muste be : ./cub3d /path/to/map.cub"
+# define	ERR_FORMAT "Invalid file format. Must be a .cub file."
 
+/* Structures */
 typedef struct s_pos
 {
 	double	x;
@@ -107,4 +109,6 @@ typedef struct s_game
 #endif
 
 /* Functions */
-
+int		check_file_format(char *filename);
+void	error(char *msg);
+int		parsing(int ac, char **av);
