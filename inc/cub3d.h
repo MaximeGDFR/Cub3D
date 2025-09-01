@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/01 16:30:31 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/01 16:47:53 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,9 @@ typedef struct s_game
 	int			**z_buffer;   // Z-buffer for depth
 }	t_game;
 
-
-#endif
-
 /* Functions */
 int		check_file_format(char *filename);
 void	error(char *msg);
 int		parsing(int ac, char **av);
+
+#endif
