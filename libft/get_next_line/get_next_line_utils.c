@@ -3,49 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:00:01 by tlair             #+#    #+#             */
-/*   Updated: 2024/12/10 10:37:00 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/02 13:58:21 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-int	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strjoin(char *stash, char *buffer)
-{
-	char	*joined;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 0;
-	joined = malloc(sizeof(char) * (ft_strlen(stash) + ft_strlen(buffer) + 1));
-	if (!joined)
-		return (NULL);
-	while (stash[i])
-	{
-		joined[i] = stash[i];
-		i++;
-	}
-	while (buffer[j])
-	{
-		joined[i + j] = buffer[j];
-		j++;
-	}
-	joined[i + j] = '\0';
-	return (joined);
-}
 
 char	*ft_strncut(char *s, int n)
 {

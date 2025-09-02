@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/01 18:35:47 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/02 15:22:43 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 # include "../minilibx-linux/mlx.h"
 # include "../libft/libft.h"
-# include "../get_next_line/get_next_line.h"
 
 # define	ERR_UTIL			"Map is missing. Muste be : ./cub3d /path/to/map.cub"
 # define	ERR_FORMAT			"Invalid file format. Must be a .cub file."
@@ -41,7 +40,6 @@ Must be : (C or F) 0-255, 0-255, 0-255."
 # define	ERR_MAP_NO_WALLS	"Map is not surrounded by walls."
 # define	ERR_MAP_LAST		"Map is not the last element in file."
 # define	ERR_MAP_INV			"Map description is either wrong or incomplete."
-# define	ERR_UTIL			"The map is missing. Must be : ./cub3d /path/to/map.cub"
 # define	ERR_FORMAT			"Invalid file format. Must be a .cub file."
 # define	ERR_MISSING_PLAYER	"Player is missing on the map."
 # define	ERR_MALLOC			"Malloc failed."
@@ -132,9 +130,12 @@ typedef struct s_game
 /* Functions */
 int		check_file_format(char *filename);
 int		parsing(int ac, char **av);
+int		parsing_map(t_game *game, char *filename);
+int		parsing_texture(char *line);
 
 // utils.c
 int		error(char *msg);
 char	**ft_arrdup(char **arr);
+void	ft_free_split(char **array);
 
 #endif

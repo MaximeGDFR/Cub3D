@@ -1,15 +1,20 @@
 NAME        = cub3d
 
 # DIRECTORIES
-RM          = rm -f
-SRC_DIR     = ./src
-OBJ_DIR     = .obj
-SRCS        = $(SRC_DIR)/main.c
+RM          =	rm -f
+SRC_DIR     =	./src
+OBJ_DIR     =	.obj
+SRCS        =	$(SRC_DIR)/main.c \
+				$(SRC_DIR)/floodfil.c \
+				$(SRC_DIR)/parsing.c \
+				$(SRC_DIR)/read_map.c \
+				$(SRC_DIR)/utils.c
 
 # INCLUDES
 LIBFT_DIR   = ./libft
 MLX_DIR     = ./minilibx-linux
 LIBFT       = $(OBJ_DIR)/libft.a
+MLX			= $(MLX_DIR)/libmlx.a
 
 # FLAGS
 CC          = cc
@@ -28,8 +33,11 @@ $(OBJ_DIR):
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME): $(LIBFT) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -L$(OBJ_DIR) -l:libft.a $(MLXFLAGS) -o $(NAME)
+$(NAME): $(LIBFT) $(MLX) $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -L$(OBJ_DIR) -l:libft.a $(MLXFLAGS) -o $@
+
+$(MLX):
+	make -C $(MLX_DIR)
 
 $(LIBFT): $(OBJ_DIR)
 	make -s -C $(LIBFT_DIR)

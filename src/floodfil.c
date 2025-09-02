@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floodfil.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 16:39:40 by tlair             #+#    #+#             */
-/*   Updated: 2025/09/01 18:23:35 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/02 14:20:06 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ int	flood_fill(char **map, t_pos pos)
 	if (map[y][x] == '1')
 		return (0);
 	if (map[y][x] == ' ')
-		return (ERR_SPACE_MISPLACED);
+		return (error(ERR_SPACE_MISPLACED));
 	if (map[y][x] == 'F')
 		return (0);
 	if (!is_traversable(map[y][x]))
-		return (ERR_INVALID_CHAR);
+		return (error(ERR_INVALID_CHAR));
 	map[y][x] = 'F';
 	pos.x = x + 1; pos.y = y;
 	if (flood_fill(map, pos))

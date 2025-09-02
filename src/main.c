@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:50:38 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/01 15:03:04 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/09/02 13:57:12 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	main(int ac, char **av)
 {
-	parsing(ac, av);
+	t_game	game;
+
+	(void)ac;
+	parsing_map(&game, av[2]);
 	return (0);
 }
