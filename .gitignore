@@ -5,3 +5,6 @@ minilibx-linux/
 minilibx-linux/*
 *.o
 *.gch
+.obj/
+.obj/*
+*.a
