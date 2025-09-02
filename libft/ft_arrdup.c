@@ -6,13 +6,13 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 16:16:14 by tlair             #+#    #+#             */
-/*   Updated: 2025/09/02 16:16:16 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/02 16:22:26 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*duplication(char **dup, char **arr, int i)
+static char	**duplication(char **dup, char **arr, int i)
 {
 	while (arr[i])
 	{
