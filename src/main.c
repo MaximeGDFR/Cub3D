@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:50:38 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/02 15:53:47 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/02 17:28:36 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ int	main(int ac, char **av)
 	t_game	game;
 
 	(void)ac;
-	parsing_map(&game, av[2]);
+	fill_map(&game, av[1]);
 	return (0);
 }

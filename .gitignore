@@ -8,3 +8,4 @@ minilibx-linux/*
 .obj/
 .obj/*
 *.a
+cub3d
