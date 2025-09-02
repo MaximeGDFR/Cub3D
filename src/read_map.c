@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 16:45:51 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/02 17:00:50 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/09/02 17:23:59 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ int	init_map(t_map *map, int fd)
 	char	*line = NULL;
 	char	*next_line = NULL;
 	int		width;
-	// int		y;
 
+	map->height = 0;
+	map->width = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -36,17 +37,18 @@ int	init_map(t_map *map, int fd)
 					return (error(ERR_INVALID_MAP));
 			}
 		}
-		if (check_line_is_map(line))
+		else
 		{
-			width = ft_strlen(line);
-			if (width > map->width)
-				map->width = width;
-			map->height++;
+			if (check_line_is_map(line))
+			{
+				width = ft_strlen(line);
+				if (width > map->width)
+					map->width = width;
+				map->height++;
+			}
+			free(line);
 		}
-		free(line);
 	}
-	printf("map->height: %d\n", map->height);
-	printf("map->width: %d\n", map->width);
 	allocate_map(map);
 	return (0);
 }
@@ -60,7 +62,7 @@ int	allocate_map(t_map *map)
 		return (error(ERR_MALLOC));
 	while (y < map->height)
 	{
-		map->grid = (char **)malloc(sizeof(char) * map->width);
+		map->grid[y] = (char *)malloc(sizeof(char) * map->width + 1);
 		if (!map->grid[y])
 		{
 			while (--y >= 0)
@@ -79,7 +81,6 @@ int	fill_map(t_game *game, char *filename)
 	int		y;
 	int		fd;
 	char	*line;
-	// char	*next_line;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -95,8 +96,9 @@ int	fill_map(t_game *game, char *filename)
 			free(line);
 			continue ;
 		}
-		if (check_line_is_map(line))
+		else
 		{
+			y = 0;
 			while (line[y])
 			{
 				game->map.grid[x][y] = line[y];
@@ -104,7 +106,6 @@ int	fill_map(t_game *game, char *filename)
 			}
 			game->map.grid[x][y] = '\n';
 			x++;
-			y = 0;
 		}
 		free(line);
 	}
@@ -116,6 +117,8 @@ int	check_line_is_map(char *line)
 	int	i;
 
 	i = 0;
+	if (!line)
+		return (-1);
 	while (line[i])
 	{
 		if (!is_space(line[i]) || !is_valid_char(line[i]))
@@ -135,6 +138,6 @@ int	is_space(char c)
 int	is_valid_char(char c)
 {
 	if (c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		return (1);
+		return (-1);
 	return (0);
 }

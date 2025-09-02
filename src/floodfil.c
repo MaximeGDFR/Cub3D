@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floodfil.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 16:39:40 by tlair             #+#    #+#             */
-/*   Updated: 2025/09/02 15:58:14 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/02 17:11:55 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,29 +119,29 @@ int	is_playable(char **map, t_player player)
 }
 
 // TEMP TEST MAIN
-int	main(void)
-{
-	char	*map[] = {
-		"1111111111111111111",
-		"1001001001001001001",
-		"1001001001001001001",
-		"1001001001001001001",
-		"1001001000001001001",
-		"100000000S000000001",
-		"1000011111111000001",
-		"1111000000000001111",
-		"1000000101010000001",
-		"1111111111111111111",
-		NULL
-	};
-	t_player	player;
-	int			result;
+// int	main(void)
+// {
+// 	char	*map[] = {
+// 		"1111111111111111111",
+// 		"1001001001001001001",
+// 		"1001001001001001001",
+// 		"1001001001001001001",
+// 		"1001001000001001001",
+// 		"100000000S000000001",
+// 		"1000011111111000001",
+// 		"1111000000000001111",
+// 		"1000000101010000001",
+// 		"1111111111111111111",
+// 		NULL
+// 	};
+// 	t_player	player;
+// 	int			result;
 
-	ft_bzero(&player, sizeof(t_player));
-	result = is_playable(map, player);
-	if (result == 0)
-		printf("✅ Map is valid and closed !\n");
-	else
-		printf("❌ Map is invalid (error code %d)\n", result);
-	return (0);
-}
+// 	ft_bzero(&player, sizeof(t_player));
+// 	result = is_playable(map, player);
+// 	if (result == 0)
+// 		printf("✅ Map is valid and closed !\n");
+// 	else
+// 		printf("❌ Map is invalid (error code %d)\n", result);
+// 	return (0);
+// }
