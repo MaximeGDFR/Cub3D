@@ -1,6 +1,6 @@
 *.txt
 *.sh
-*test*
+test.*
 minilibx-linux/
 minilibx-linux/*
 *.o
