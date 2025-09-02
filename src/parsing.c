@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:50:49 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/01 18:36:32 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/02 16:36:37 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,3 +35,24 @@ int	parsing(int ac, char **av)
 	return (0);
 }
 
+// int	parsing_texture(char *line)
+// {
+// 	int	i;
+
+// 	if (ft_strncmp(line, "NO", 2)
+// 		|| ft_strncmp(line, "SO", 2)
+// 		|| ft_strncmp(line, "WE", 2)
+// 		|| ft_strncmp(line, "EA", 2))
+
+// 	return (0);
+// }
+
+// int	parsing_colors(char *line)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	if (line[i] != 'F' || line[i] != 'C')
+// 		return (error(ERR_COL_SYN));
+	
+// }

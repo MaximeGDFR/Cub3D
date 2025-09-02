@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/02 15:22:43 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:57:34 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,14 @@ int		check_file_format(char *filename);
 int		parsing(int ac, char **av);
 int		parsing_map(t_game *game, char *filename);
 int		parsing_texture(char *line);
+
+/* read_map.c */
+int	init_map(t_map *map, int fd);
+int	allocate_map(t_map *map);
+int	fill_map(t_game *game, char *filename);
+int	check_line_is_map(char *line);
+int	is_space(char c);
+int	is_valid_char(char c);
 
 // utils.c
 int		error(char *msg);
