@@ -2,3 +2,6 @@
 *.sh
 *test*
 minilibx-linux/
+minilibx-linux/*
+*.o
+*.gch

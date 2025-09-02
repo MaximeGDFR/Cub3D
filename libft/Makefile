@@ -5,9 +5,11 @@ GNL_DIR		=	./get_next_line
 OBJ_DIR		=	.obj
 
 # SOURCES
-SRCS	=	ft_atoi.c \
+SRCS	=	ft_arrdup.c \
+			ft_atoi.c \
 			ft_bzero.c \
 			ft_calloc.c \
+			ft_free_split.c \
 			ft_isalnum.c \
 			ft_isalpha.c \
 			ft_isascii.c \

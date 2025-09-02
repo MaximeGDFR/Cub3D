@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/01 14:50:38 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/02 15:53:47 by tlair            ###   ########.fr       */
+/*   Created: 2025/09/02 16:15:36 by tlair             #+#    #+#             */
+/*   Updated: 2025/09/02 16:16:08 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "libft.h"
 
-int	main(int ac, char **av)
+void	ft_free_split(char **arr)
 {
-	t_game	game;
+	int	i;
 
-	(void)ac;
-	parsing_map(&game, av[2]);
-	return (0);
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
