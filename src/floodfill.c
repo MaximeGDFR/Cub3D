@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 16:39:40 by tlair             #+#    #+#             */
-/*   Updated: 2025/09/09 16:46:38 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/09 17:41:20 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ static double	player_orientation(char c)
 	if (c == 'W')
 		return (180);
 	return (-1);
+}
+
+static t_pos	define_player_pos(int i, int j, char **map, t_pos pos)
+{
+	pos.x = j;
+	pos.y = i;
+	pos.yaw = player_orientation(map[i][j]);
+	return (pos);
 }
 
 static t_pos	find_player_position(char **map)
@@ -45,18 +53,11 @@ static t_pos	find_player_position(char **map)
 		{
 			if (map[i][j] == 'N' || map[i][j] == 'S' || map[i][j] == 'E'
 				|| map[i][j] == 'W')
-			{
-				pos.x = j;
-				pos.y = i;
-				pos.yaw = player_orientation(map[i][j]);
-				return (pos);
-			}
+				return (define_player_pos(i, j, map, pos));
 			j++;
 		}
 		i++;
 	}
-	pos.x = -1;
-	pos.y = -1;
 	return (pos);
 }
 
@@ -65,28 +66,10 @@ static int	is_traversable(char c)
 	return (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-int	flood_fill_outside(char **map, t_pos pos)
-{
-	int		x = (int)pos.x;
-	int		y = (int)pos.y;
-	size_t	len;
+int	flood_fill_outside(char **map, t_pos pos);
 
-	if (y < 0 || !map[y] || x < 0)
-		return (0);
-	len = ft_strlen(map[y]);
-	if ((size_t)x >= len)
-		return (0);
-	if (map[y][x] == '1' || map[y][x] == 'F')
-		return (0);
-	// si on tombe sur un espace, on continue
-	if (map[y][x] == ' ')
-		map[y][x] = 'F';
-	// si on tombe sur un '0' ou un joueur -> fuite => map ouverte
-	else if (is_traversable(map[y][x]))
-		return (1);
-	else
-		return (0);
-	map[y][x] = 'F';
+int	flood_fill_recursive(char **map, int x, int y)
+{
 	if (flood_fill_outside(map, (t_pos){x + 1, y, 0}))
 		return (1);
 	if (flood_fill_outside(map, (t_pos){x - 1, y, 0}))
@@ -98,16 +81,67 @@ int	flood_fill_outside(char **map, t_pos pos)
 	return (0);
 }
 
+int	flood_fill_outside(char **map, t_pos pos)
+{
+	int		x;
+	int		y;
+	size_t	len;
+
+	x = (int)pos.x;
+	y = (int)pos.y;
+	if (y < 0 || !map[y] || x < 0)
+		return (0);
+	len = ft_strlen(map[y]);
+	if ((size_t)x >= len)
+		return (0);
+	if (map[y][x] == '1' || map[y][x] == 'F')
+		return (0);
+	if (map[y][x] == ' ')
+		map[y][x] = 'F';
+	else if (is_traversable(map[y][x]))
+		return (1);
+	else
+		return (0);
+	map[y][x] = 'F';
+	if (flood_fill_recursive(map, x, y))
+		return (1);
+	return (0);
+}
+
+void	wrap_with_spaces(int *h, int *w, char **res, char **map)
+{
+	int	i;
+
+	i = 0;
+	while (i < *h)
+	{
+		res[i + 1] = ft_calloc(*w + 3, sizeof(char));
+		ft_memset(res[i + 1], ' ', *w + 2);
+		ft_memcpy(res[i + 1] + 1, map[i], ft_strlen(map[i]));
+		res[i + 1][*w + 2] = '\0';
+		i++;
+	}
+}
+
+static char	**norm_is_bad_idk_how_to_name_this(char **res, int h, int w)
+{
+	res[h + 1][w + 2] = '\0';
+	res[h + 2] = NULL;
+	return (res);
+}
+
 char	**extend_map(char **map)
 {
-	int		h = 0;
-	int		w = 0;
-	int		i;
+	int		h;
+	int		w;
+	int		len;
 	char	**res;
 
+	h = 0;
+	w = 0;
 	while (map[h])
 	{
-		int len = (int)ft_strlen(map[h]);
+		len = (int)ft_strlen(map[h]);
 		if (len > w)
 			w = len;
 		h++;
@@ -115,26 +149,13 @@ char	**extend_map(char **map)
 	res = malloc(sizeof(char *) * (h + 3));
 	if (!res)
 		return (NULL);
-	// première ligne pleine d'espaces
 	res[0] = ft_calloc(w + 3, sizeof(char));
 	ft_memset(res[0], ' ', w + 2);
 	res[0][w + 2] = '\0';
-	// lignes de la map
-	i = 0;
-	while (i < h)
-	{
-		res[i + 1] = ft_calloc(w + 3, sizeof(char));
-		ft_memset(res[i + 1], ' ', w + 2);
-		ft_memcpy(res[i + 1] + 1, map[i], ft_strlen(map[i]));
-		res[i + 1][w + 2] = '\0';
-		i++;
-	}
-	// dernière ligne pleine d'espaces
+	wrap_with_spaces(&h, &w, res, map);
 	res[h + 1] = ft_calloc(w + 3, sizeof(char));
 	ft_memset(res[h + 1], ' ', w + 2);
-	res[h + 1][w + 2] = '\0';
-	res[h + 2] = NULL;
-	return (res);
+	return (norm_is_bad_idk_how_to_name_this(res, h, w));
 }
 
 int	is_playable(char **map, t_player *player)
@@ -271,23 +292,12 @@ int	main(void)
 		"11110111111111011101010010001  1 ",
 		"11000000110101011100000010001 101",
 		"10000000000000001100000010001  1 ",
-		"10000000000000001101010010001    ",
+		"10000000000000001101010010001   ",
 		" 1000001110101011111011110N0111  ",
 		"  110111 1110101 101111010001  1 ",
 		"   11111 1111111 111111111111    ",
 		NULL
 	};
-	// char	*map[] = {
-	// 	"111111111111",
-	// 	"1         11",
-	// 	"1       0001",
-	// 	"1000000 0011",
-	// 	"10S000000001",
-	// 	"111111111111",
-	// 	"11         1",
-	// 	"111111111111",
-	// 	NULL
-	// };
 	t_player	*player;
 	int			result;
 
