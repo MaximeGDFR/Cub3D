@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   floodfil.c                                         :+:      :+:    :+:   */
+/*   floodfill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 16:39:40 by tlair             #+#    #+#             */
-/*   Updated: 2025/09/02 18:10:19 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/09 16:46:38 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static t_pos	find_player_position(char **map)
 	t_pos	pos;
 	int		i;
 	int		j;
-	int		map_height;
+	int		map_y;
 
-	pos.x = -1;
-	pos.y = -1;
-	map_height = 0;
-	while (map[map_height])
-		map_height++;
+	pos.x = 0;
+	pos.y = 0;
+	map_y = 0;
+	while (map[map_y])
+		map_y++;
 	i = 0;
 	while (map[i])
 	{
@@ -47,7 +47,7 @@ static t_pos	find_player_position(char **map)
 				|| map[i][j] == 'W')
 			{
 				pos.x = j;
-				pos.y = map_height - 1 - i;
+				pos.y = i;
 				pos.yaw = player_orientation(map[i][j]);
 				return (pos);
 			}
@@ -55,6 +55,8 @@ static t_pos	find_player_position(char **map)
 		}
 		i++;
 	}
+	pos.x = -1;
+	pos.y = -1;
 	return (pos);
 }
 
@@ -63,55 +65,100 @@ static int	is_traversable(char c)
 	return (c == '0' || c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-int	flood_fill(char **map, t_pos pos)
+int	flood_fill_outside(char **map, t_pos pos)
 {
 	int		x = (int)pos.x;
 	int		y = (int)pos.y;
 	size_t	len;
 
-	if (y < 0 || x < 0 || !map[y])
-		return (1);
+	if (y < 0 || !map[y] || x < 0)
+		return (0);
 	len = ft_strlen(map[y]);
 	if ((size_t)x >= len)
-		return (1);
+		return (0);
 	if (map[y][x] == '1' || map[y][x] == 'F')
 		return (0);
+	// si on tombe sur un espace, on continue
 	if (map[y][x] == ' ')
+		map[y][x] = 'F';
+	// si on tombe sur un '0' ou un joueur -> fuite => map ouverte
+	else if (is_traversable(map[y][x]))
 		return (1);
-	if (!is_traversable(map[y][x]))
-		return (1);
+	else
+		return (0);
 	map[y][x] = 'F';
-	if (flood_fill(map, (t_pos){x + 1, y, 0}))
+	if (flood_fill_outside(map, (t_pos){x + 1, y, 0}))
 		return (1);
-	if (flood_fill(map, (t_pos){x - 1, y, 0}))
+	if (flood_fill_outside(map, (t_pos){x - 1, y, 0}))
 		return (1);
-	if (flood_fill(map, (t_pos){x, y + 1, 0}))
+	if (flood_fill_outside(map, (t_pos){x, y + 1, 0}))
 		return (1);
-	if (flood_fill(map, (t_pos){x, y - 1, 0}))
+	if (flood_fill_outside(map, (t_pos){x, y - 1, 0}))
 		return (1);
 	return (0);
 }
 
-int	is_playable(char **map, t_player player)
+char	**extend_map(char **map)
+{
+	int		h = 0;
+	int		w = 0;
+	int		i;
+	char	**res;
+
+	while (map[h])
+	{
+		int len = (int)ft_strlen(map[h]);
+		if (len > w)
+			w = len;
+		h++;
+	}
+	res = malloc(sizeof(char *) * (h + 3));
+	if (!res)
+		return (NULL);
+	// première ligne pleine d'espaces
+	res[0] = ft_calloc(w + 3, sizeof(char));
+	ft_memset(res[0], ' ', w + 2);
+	res[0][w + 2] = '\0';
+	// lignes de la map
+	i = 0;
+	while (i < h)
+	{
+		res[i + 1] = ft_calloc(w + 3, sizeof(char));
+		ft_memset(res[i + 1], ' ', w + 2);
+		ft_memcpy(res[i + 1] + 1, map[i], ft_strlen(map[i]));
+		res[i + 1][w + 2] = '\0';
+		i++;
+	}
+	// dernière ligne pleine d'espaces
+	res[h + 1] = ft_calloc(w + 3, sizeof(char));
+	ft_memset(res[h + 1], ' ', w + 2);
+	res[h + 1][w + 2] = '\0';
+	res[h + 2] = NULL;
+	return (res);
+}
+
+int	is_playable(char **map, t_player *player)
 {
 	char	**map_copy;
+	char	**map_ext;
 	int		res;
 
-	player.pos = find_player_position(map);
-	if (player.pos.x == -1 || player.pos.y == -1)
-		return (error(ERR_MISSING_PLAYER), 1);
+	player->pos = find_player_position(map);
+	if (player->pos.x == -1 || player->pos.y == -1)
+		return (error(ERR_MISSING_PLAYER));
 	map_copy = ft_arrdup(map);
 	if (!map_copy)
-		return (error(ERR_MALLOC), 1);
-	res = flood_fill(map_copy, player.pos);
+		return (error(ERR_MALLOC));
+	map_ext = extend_map(map_copy);
 	ft_free_split(map_copy);
+	if (!map_ext)
+		return (error(ERR_MALLOC));
+	res = flood_fill_outside(map_ext, (t_pos){0, 0, 0});
+	ft_free_split(map_ext);
 	if (res)
 		return (error(ERR_MAP_NOT_CLOSED));
 	return (0);
 }
-
-
-
 
 
 // TEMP TEST MAIN
@@ -120,6 +167,8 @@ static void	print_map(char **map)
 {
 	int	i, j, max_len;
 
+	printf("======= MAP ORIGINALE =======\n\n");
+	
 	// Calculer la longueur maximale d'une ligne
 	max_len = 0;
 	i = 0;
@@ -195,55 +244,63 @@ static void	print_map(char **map)
 	printf("╝\n");
 }
 
-int	main(void)
+void	debug_print(t_player *player, int result)
 {
-	// char	*map[] = {
-	// 	"1111111111111111111",
-	// 	"1001001001001001001",
-	// 	"1001001001001001001",
-	// 	"1001001001001001001",
-	// 	"1001001000001001001",
-	// 	"100000000000S000001",
-	// 	"1000011111111000001",
-	// 	"1111000000000001111",
-	// 	"1000000101010000001",
-	// 	"1111111111111111111",
-	// 	NULL
-	// };
-	char	*map[] = {
-		"       1111111111111111111111111",
-		"       1000000000110000000000001",
-		"       1011000001110000000000001",
-		"       1001000000000000000000001",
-		"111111111011000001110000000000001",
-		"100000000011000001110111110111111",
-		"11110111111111011100000010001",
-		"11110111111111011101010010001",
-		"11000000110101011100000010001",
-		"10000000000000001100000010001",
-		"10000000000000001101010010001",
-		"11000001110101011111011110N0111",
-		"11110111 1110101 101111010001",
-		"11111111 1111111 111111111111",
-		NULL
-	};
-	t_player	player = {0};
-	int			result;
+	printf("\n======= INFOS JOUEUR =======\n");
+	printf("Position X: %.0f\n", player->pos.x);
+	printf("Position Y: %.0f\n", player->pos.y);
+	printf("Yaw       : %.0f°\n", player->pos.yaw);
 
-	printf("=== MAP ORIGINALE ===\n\n");
-	print_map(map);
-
-	result = is_playable(map, player);
-
-	printf("\n=== INFOS JOUEUR ===\n");
-	printf("Position X: %d\n", (int)player.pos.x);
-	printf("Position Y: %d\n", (int)player.pos.y);
-	printf("Yaw       : %.2f°\n", player.pos.yaw);
-
-	printf("\n=== RESULTAT FLOODFILL ===\n");
+	printf("\n===== RESULTAT FLOODFILL =====\n");
 	if (result == 0)
 		printf("✅ Map valide et fermée\n");
-	else
+	else // inatteignable normalement
 		printf("❌ Map invalide (code %d)\n", result);
+}
+
+int	main(void)
+{
+	char	*map[] = {
+		"       111111111111111111111111 ",
+		"  1    1000000000110000000000001 ",
+		" 101   101100000111000      0001 ",
+		" 101   100100000000000      0001 ",
+		"110111111011000001110000000000001",
+		"100000000011000001110111110111111",
+		"11110111111111011100000010001    ",
+		"11110111111111011101010010001  1 ",
+		"11000000110101011100000010001 101",
+		"10000000000000001100000010001  1 ",
+		"10000000000000001101010010001    ",
+		" 1000001110101011111011110N0111  ",
+		"  110111 1110101 101111010001  1 ",
+		"   11111 1111111 111111111111    ",
+		NULL
+	};
+	// char	*map[] = {
+	// 	"111111111111",
+	// 	"1         11",
+	// 	"1       0001",
+	// 	"1000000 0011",
+	// 	"10S000000001",
+	// 	"111111111111",
+	// 	"11         1",
+	// 	"111111111111",
+	// 	NULL
+	// };
+	t_player	*player;
+	int			result;
+
+	player = malloc(sizeof(t_player));
+	if (!player)
+		return (1);
+	result = is_playable(map, player);
+	if (result == 1)
+		return (0);
+
+	print_map(map);
+	debug_print(player, result);
+
+	free(player);
 	return (0);
 }

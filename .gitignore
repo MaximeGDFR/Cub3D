@@ -9,3 +9,4 @@ minilibx-linux/*
 .obj/*
 *.a
 cub3d
+a.out

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/02 16:57:34 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/09/09 15:46:15 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ Must be : (C or F) 0-255, 0-255, 0-255."
 # define	ERR_SPACE_MISPLACED	"Mispaced space."
 # define	ERR_INVALID_CHAR	"Invalid char on the map."
 # define	ERR_FLOOD_FAIL		"Flood fill error."
-# define	ERR_MAP_NOT_CLOSED	"Map not closed."
+# define	ERR_MAP_NOT_CLOSED	"Map not closed. (or invalid)"
 
 /* Structures */
 typedef struct s_pos
