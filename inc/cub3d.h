@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/10 11:02:21 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/10 11:14:41 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void	print_map(char **map);
 char	**extend_map(char **map);
 
 // floodfill.c
-
+int	flood_fill_outside(char **map, t_pos pos);
 
 // utils.c
 int		error(char *msg);

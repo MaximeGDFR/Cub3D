@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 16:39:40 by tlair             #+#    #+#             */
-/*   Updated: 2025/09/10 11:10:38 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/10 11:14:29 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ static t_pos	find_player_position(char **map)
 	}
 	return (pos);
 }
-
-int	flood_fill_outside(char **map, t_pos pos);
 
 int	flood_fill_recursive(char **map, int x, int y)
 {
