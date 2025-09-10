@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/09 17:06:42 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/10 11:02:21 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,19 +127,30 @@ typedef struct s_game
 	int			**z_buffer;   // Z-buffer for depth
 }	t_game;
 
-/* Functions */
+/*   Functions   */
 int		check_file_format(char *filename);
 int		parsing(int ac, char **av);
 int		parsing_map(t_game *game, char *filename);
 int		parsing_texture(char *line);
 
-/* read_map.c */
+// read_map.c
 int	init_map(t_map *map, int fd);
 int	allocate_map(t_map *map);
 int	fill_map(t_game *game, char *filename);
 int	check_line_is_map(char *line);
 int	is_space(char c);
 int	is_valid_char(char c);
+
+/*  Map checking   */
+
+// print_map.c
+void	print_map(char **map);
+
+// extend_map.c
+char	**extend_map(char **map);
+
+// floodfill.c
+
 
 // utils.c
 int		error(char *msg);
