@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:40:39 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/10 11:14:41 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/12 08:50:37 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define CUB3D_H
 
 /* Librairies */
-
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
 # include <string.h>
+# include <ctype.h>
 # include <X11/keysym.h>
 
 # include "../minilibx-linux/mlx.h"
@@ -51,6 +51,7 @@ Must be : (C or F) 0-255, 0-255, 0-255."
 # define	ERR_INVALID_CHAR	"Invalid char on the map."
 # define	ERR_FLOOD_FAIL		"Flood fill error."
 # define	ERR_MAP_NOT_CLOSED	"Map not closed. (or invalid)"
+# define	ERR_MAP_MIS			"Map is missing."
 
 /* Structures */
 typedef struct s_pos
@@ -93,7 +94,10 @@ typedef struct s_ray
 
 typedef struct s_tex
 {
-	char	*path;        // Texture file path
+	char	*north;        // Texture file path
+	char	*south;
+	char	*east;
+	char	*west;
 	t_img	img;          // Texture image data
 }	t_tex;
 
@@ -102,6 +106,11 @@ typedef struct s_map
 	char	**grid;     // 2D map grid in chars
 	int		width;      // Map width
 	int		height;     // Map height
+	int		first_line;
+	int		last_line;
+	int		has_player;
+	int		player_x;
+	int		player_y;
 }	t_map;
 
 typedef struct s_color
@@ -121,11 +130,27 @@ typedef struct s_game
 	t_map		map;          // Map data
 	t_tex		tex[4];       // Textures: 0=N, 1=S, 2=W, 3=E
 	t_color		floor;        // Floor color
-	t_color		ceiling;      // Ceiling color
+	t_color		ceilling;      // Ceiling color
 	int			screen_w;     // Screen width
 	int			screen_h;     // Screen height
 	int			**z_buffer;   // Z-buffer for depth
 }	t_game;
+
+typedef enum e_state
+{
+	BEFORE_MAP,
+	IN_MAP,
+	AFTER_MAP
+}	t_state;
+
+enum e_output
+{
+	SUCCESS = 0,
+	FAILURE = 1,
+	ERR = 2,
+	BREAK = 3,
+	CONTINUE = 4
+};
 
 /*   Functions   */
 int		check_file_format(char *filename);
@@ -134,12 +159,29 @@ int		parsing_map(t_game *game, char *filename);
 int		parsing_texture(char *line);
 
 // read_map.c
-int	init_map(t_map *map, int fd);
-int	allocate_map(t_map *map);
-int	fill_map(t_game *game, char *filename);
-int	check_line_is_map(char *line);
-int	is_space(char c);
-int	is_valid_char(char c);
+int		init_map(t_map *map);
+int		parsing_data(t_game *game, char *filename);
+int		get_file_info(t_game *game, int fd);
+int		parsing_line(t_game *game, t_state *state, char *line);
+int		get_texture_info(t_game *game, char *line);
+int		fill_texture_info(t_game *game, char *line, int *i);
+char	*get_path_texture(char *line, int *i);
+int		fill_color_ceilling(t_game *game, char *line, int *i);
+int		extract_value(char *line, int value, int *i, int digits_count);
+int		fill_rgb(t_color *color_to_fill, int *index_rgb, int value);
+int		fill_color_floor(t_game *game, char *line, int *i);
+int		get_map_info(t_game *game, char *line);
+int		line_is_empty(char *line);
+int		is_valid_char(char c);
+int		check_line_is_map(char *line);
+int		select_parser(t_game *game, t_state *state, char *line);
+int		is_map_line(t_game *game, char *line);
+
+
+int		copy_map(t_game *game, char *line);
+int		allocation_map(t_game *game, t_list *lines);
+int		finalize_copy(t_game *game, t_list *lines);
+int		get_max_width(t_list *lines);
 
 /*  Map checking   */
 
@@ -150,7 +192,7 @@ void	print_map(char **map);
 char	**extend_map(char **map);
 
 // floodfill.c
-int	flood_fill_outside(char **map, t_pos pos);
+int		flood_fill_outside(char **map, t_pos pos);
 
 // utils.c
 int		error(char *msg);

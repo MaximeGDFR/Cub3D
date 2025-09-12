@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:50:49 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/09/02 16:36:37 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/09/12 08:27:38 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/cub3d.h"
+#include "../../inc/cub3d.h"
 
 int	check_file_format(char *filename)
 {
@@ -34,25 +34,3 @@ int	parsing(int ac, char **av)
 	}
 	return (0);
 }
-
-// int	parsing_texture(char *line)
-// {
-// 	int	i;
-
-// 	if (ft_strncmp(line, "NO", 2)
-// 		|| ft_strncmp(line, "SO", 2)
-// 		|| ft_strncmp(line, "WE", 2)
-// 		|| ft_strncmp(line, "EA", 2))
-
-// 	return (0);
-// }
-
-// int	parsing_colors(char *line)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (line[i] != 'F' || line[i] != 'C')
-// 		return (error(ERR_COL_SYN));
-	
-// }

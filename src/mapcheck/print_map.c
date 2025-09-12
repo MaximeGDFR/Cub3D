@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/10 10:07:49 by tlair             #+#    #+#             */
-/*   Updated: 2025/09/10 10:59:48 by tlair            ###   ########.fr       */
+/*   Updated: 2025/09/12 08:44:50 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,11 @@ static void	line_print(int len, char *str)
 
 static void	print_map_title(int max_len)
 {
-	int	i;
-
 	printf("\n");
 	if (max_len < 19)
 	{
 		printf("MAP ORIGINALE\n");
 		printf("╔");
-		i = 0;
 		line_print(max_len, "═");
 		printf("╗\n");
 	}
@@ -93,7 +90,6 @@ void	print_map(char **map)
 	int	i;
 	int	j;
 	int	max_len;
-	int	total_width;
 
 	max_len = 0;
 	i = 0;
